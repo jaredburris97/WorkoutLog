@@ -9,12 +9,12 @@ app.use('/api/test', function(req,res){
 });
 
 var Sequelize = require('sequelize');
-var sequalize = new Sequelize('workoutlog', 'postgres', 'yourpassword', {
+var sequelize = new Sequelize('workoutlog', 'postgres', 'Postgresjared990199', {
 	host: 'localhost',
 	dialect: 'postgres'
 });
 
-sequalize.authenticate().then(
+sequelize.authenticate().then(
 	function(){
 		console.log('connected to workoutlog postgres db');
 	},
@@ -36,7 +36,14 @@ var User = sequelize.define('user', {
 	passwordhash: Sequelize.STRING,
 });
 User.sync();
-// User.sync({force:true});		// Drops the table completely (hard reset?)
+
+/***************
+	* D A N G E R * THIS WILL DROP (DELETE) THE USER TABLE (USER INFO)
+	
+//User.sync({force:true});		// Drops the table completely (hard reset?)
+
+****************/
+
 app.use(bodyParser.json());
 app.post('/api/user', function(req, res){
 	// When we post to api user, it will want a user object in the body
