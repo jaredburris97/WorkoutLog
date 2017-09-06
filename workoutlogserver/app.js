@@ -1,72 +1,20 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser'); // added in module 7
+var sequelize = require('./db.js');		// added in module 9
 
+var User = sequelize.import('./models/user');
+//Create table
+User.sync();	//User.sync({force:true});	//WARNING: THIS DROPS(DELETES) USER TABLE
+
+app.use(bodyParser.json());
 app.use(require('./middleware/headers'));
-
+app.use('/api/user',require('./routes/user'))
 app.use('/api/test', function(req,res){
-	res.send('Hello World')
+	res.send('Hello World, from server app.js!')
 });
-
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize('workoutlog', 'postgres', 'Postgresjared990199', {
-	host: 'localhost',
-	dialect: 'postgres'
-});
-
-sequelize.authenticate().then(
-	function(){
-		console.log('connected to workoutlog postgres db');
-	},
-	function(err){
-		console.log(err);
-	}
-);
-
+//sequelize code cut to db.js file (module 9)
 app.listen(3000, function(){
 	console.log("...App is listening (open) on 3000...");
 });
-
-
-
-
-// build a user model in sequelize
-var User = sequelize.define('user', {
-	username: Sequelize.STRING,
-	passwordhash: Sequelize.STRING,
-});
-User.sync();
-
-/***************
-	* D A N G E R * THIS WILL DROP (DELETE) THE USER TABLE (USER INFO)
-	
-//User.sync({force:true});		// Drops the table completely (hard reset?)
-
-****************/
-
-app.use(bodyParser.json());
-app.post('/api/user', function(req, res){
-	// When we post to api user, it will want a user object in the body
-	var username = req.body.user.username;
-	var pass = req.body.user.password;		// TO-DO: hash this password - HASH=not human readable
-
-	// Need to create a user object and use sequelize to put that user into our database.
-	// Match the model we create above
-	// Sequelize - take the user model and go out to the db and create this:
-	User.create({
-		username: username,
-		passwordhash: ""
-	}).then(
-			// Sequelize is going to return the object it created from db.
-			function createSuccess(user){
-				// Successful get this:
-				res.json({
-					user: user,
-					message: 'create'
-				});
-			},
-			function createError(err){
-				res.send(500, err.message);
-			}
-		);
-});
+//app.post code cut to user.js in routes folder (module 10)
