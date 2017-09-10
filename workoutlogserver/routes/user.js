@@ -1,28 +1,34 @@
 var router = require('express').Router();
 var sequelize = require('../db.js');
 var User = sequelize.import('../models/user');
+var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
 
-router.post('/', function(req, res){	//changed app.post to router.post (module 10)
 
-	var username = req.body.user.username;
-	var pass = req.body.user.password;		//TODO: hash this pw
-	// Need to create a user object and use sequelize to put it into the db
-	User.create({
-		username: username,
-		passwordhash: ""		//TODO: make it hashed
-	}).then(
-	// Sequelize is going to return the object it created from db.
+router.post('/', function(req, res) {
+		var username = req.body.user.username;
+		var pass = req.body.user.password;
+		//Need to create a user object and use sequelize to put that user into
+
+		User.create({
+			username: username,
+			passwordhash: bcrypt.hashSync(pass, 10)
+		}).then(
+		//Sequelize is going to return the object it created from db.
+
 			function createSuccess(user){
-				// Successful get this:
+			    var token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
+
 				res.json({
-					user: user,
-					message: 'created'
+						user: user,
+						message: 'created',
+						sessionToken: token
 				});
 			},
 			function createError(err){
 				res.send(500, err.message);
 			}
 		);
-});
+	});
 
 module.exports = router;
