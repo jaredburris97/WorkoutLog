@@ -1,4 +1,8 @@
 require('dotenv').config();
+<<<<<<< HEAD
+=======
+
+>>>>>>> kcp-test
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser'); // added in module 7
@@ -8,16 +12,21 @@ var User = sequelize.import(__dirname + '\\models\\user');
 
 //Create table
 
-User.sync();	//User.sync({force:true});	//WARNING: THIS DROPS(DELETES) USER TABLE
+sequelize.sync();	//User.sync({force:true});	//WARNING: THIS DROPS(DELETES) USER TABLE
+
 app.use(bodyParser.json());
 
 app.use(require('./middleware/headers'));
 app.use(require('./middleware/validate-session'));
+
 //Creating a user
-app.use('/api/user',require('./routes/user'))
+app.use('/api/user',require('./routes/user'));
+
 //Logging in a user
 app.use('/api/login', require('./routes/session'));
 //localhost:3000/api/login/
+
+
 app.use('/api/definition', require('./routes/definition'));
 
 app.use('/api/log', require('./routes/log'));
