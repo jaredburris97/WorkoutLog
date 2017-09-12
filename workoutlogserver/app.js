@@ -1,8 +1,5 @@
 require('dotenv').config();
-<<<<<<< HEAD
-=======
 
->>>>>>> kcp-test
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser'); // added in module 7

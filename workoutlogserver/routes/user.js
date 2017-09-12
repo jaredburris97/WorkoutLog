@@ -13,12 +13,14 @@ router.post('/', function(req, res) {
 		User.create({
 			username: username,
 			passwordhash: bcrypt.hashSync(pass, 10)
+			//weight
+			//height
 		}).then(
 		//Sequelize is going to return the object it created from db.
 
 			function createSuccess(user){
 			    var token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
-
+			    console.log(token); //user signup goes to this file first
 				res.json({
 						user: user,
 						message: 'created',

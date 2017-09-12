@@ -1,11 +1,12 @@
 var router = require('express').Router();
 var sequelize = require('../db');
-var Log = sequelize.import('../models/user');
+var Log = sequelize.import('../models/log');
 var User = sequelize.import('../models/user');
 var Definition = sequelize.import('../models/definition');
 
 router.post('/', function(req, res) {
 	// req has some body properties that have a username and password
+	console.log(req.body);
 	var description = req.body.log.desc;
 	var result = req.body.log.result;
 	var user = req.user;
@@ -22,6 +23,7 @@ router.post('/', function(req, res) {
 		.then(
 			function createSuccess(log) {
 				res.json(log);
+				console.log(log);
 			},
 				function createError(err) {
 					res.send(500, err.message);

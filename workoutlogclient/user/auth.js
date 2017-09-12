@@ -1,6 +1,8 @@
 $(function(){
-	$.extend(WorkoutLog, {		
+	$.extend(WorkoutLog, {	
+
 		signup: function(){								//signup method			
+			console.log("WorkoutLog.signup");
 			var username = $("#su_username").val();		//username & password variables
 			var password = $("#su_password").val();			
 			var user = {								//user object
@@ -42,12 +44,8 @@ $(function(){
 			}).fail(function() {
 				$("#su_error").text("There was an issue with sign up").show();
 			});
-		}
-
-	//bind events
-	$("#signup").on("click", WorkoutLog.signup);
-
 		},
+
 
 		//login method
 		login: function() {		//SYNTAX ERROR???
@@ -85,7 +83,7 @@ $(function(){
 					$('a[href="#define"]').tab("show");
 
 			}).fail(function() {
-				$("#li_error").text("There was an issue with sign up").show();
+				$("#li_error").text("There was an issue with login").show();
 			});
 		},
 		

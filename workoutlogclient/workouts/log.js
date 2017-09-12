@@ -13,7 +13,7 @@ $(function() {
 				}
 				$("#log-definition").children().remove();
 				$("#log-definition").append(opts);
-				$("#update-definition").children.remove();
+				$("#update-definition").children().remove();
 				$("update-definition").append(opts);
 			},
 			setHistory: function() {
@@ -48,6 +48,7 @@ $(function() {
 				});
 
 				logger.done(function(data) {
+					console.log(data);
 					WorkoutLog.log.workouts.push(data);
 					$("#log-description").val("");
 					$("#log-result").val("");
@@ -82,10 +83,10 @@ $(function() {
 			updateWorkout: function() {
 				$("#update").text("Update");
 				var updateLog = {
-					id: $('#update-id')val(),
+					id: $("#update-id").val(),
 					desc: $("#update-description").val(),
-						result: $("#update-result").val(),
-						def: $("#update-definition option:selected").text()
+					result: $("#update-result").val(),
+					def: $("#update-definition option:selected").text()
 				};
 				for(var i = 0; i < WorkoutLog.log.workouts.length; i++){
 					if(WorkoutLog.log.workouts[i].id == updateLog.id){
