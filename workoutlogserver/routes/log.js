@@ -1,8 +1,8 @@
 var router = require('express').Router();
-var sequelize = require('../db');
-var Log = sequelize.import('../models/log');
-var User = sequelize.import('../models/user');
-var Definition = sequelize.import('../models/definition');
+var sequelize = require('../db.js');
+var Log = sequelize.import('../models/log.js');
+var User = sequelize.import('../models/user.js');
+var Definition = sequelize.import('../models/definition.js');
 
 router.post('/', function(req, res) {
 	// req has some body properties that have a username and password

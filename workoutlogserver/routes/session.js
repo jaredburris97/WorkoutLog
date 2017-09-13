@@ -2,7 +2,7 @@ var router = require('express').Router();
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var sequelize = require('../db.js');
-var User = sequelize.import('../models/user');
+var User = sequelize.import('../models/user.js');
 
 router.post('/', function(req, res){	//changed app.post to router.post (module 10)
 	User.findOne( { where: { username:req.body.user.username } } ).then(

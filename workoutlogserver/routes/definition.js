@@ -17,7 +17,7 @@ router.post('/', function(req,res) {				//post method
 			logType: logType,
 			owner: owner
 		})
-			.then(				
+			.then(
 				function createSuccess(definition) {	//createSuccess function
 
 					res.json({							//send a response as json
